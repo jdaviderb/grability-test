@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="menu">
-      <div class="toggle has-tap" @click="show = !show">
+      <div class="toggle has-tap" @click="toggleMenu">
         <i class="fa fa-list-ul fa-lg"></i>
       </div>
       <transition name="item-show-effect">
@@ -41,13 +41,18 @@ export default {
     return {
       show: false,
       items: items,
-      selectItem: {}
+      selectItem: {show: false}
     }
   },
   methods: {
     toggle (data) {
       this.selectItem = data
       data.show = !data.show
+    },
+    toggleMenu () {
+      this.show = !this.show
+      this.selectItem.show = false
+      this.selectItem = {show: false}
     }
   }
 }
@@ -84,7 +89,10 @@ export default {
       flex: 1;
       color: white;
       text-align: center;
+      overflow: hidden;
+        text-overflow: ellipsis;
       font-size: 20px;
+
     }
 
     .items {
