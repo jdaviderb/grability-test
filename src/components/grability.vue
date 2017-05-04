@@ -4,12 +4,15 @@
       <div class="toggle has-tap" @click="show = !show">
         <i class="fa fa-list-ul fa-lg"></i>
       </div>
+      <transition name="item-show-effect">
+        <div v-show="selectItem.show" class="title">{{ selectItem.title }}</div>
+      </transition>
     </div>
     <div class="items">
          <transition name="item-effect" v-for="item in items">
           <div class="item" v-show="show">
 
-            <div class="header has-tap" @click="item.show = !item.show">
+            <div class="header has-tap" @click="toggle(item)">
               <img :src="item.image" class="photo-grability">
               <div class="description">
                 <p>{{item.title}}</p>
@@ -37,7 +40,14 @@ export default {
   data () {
     return {
       show: false,
-      items: items
+      items: items,
+      selectItem: {}
+    }
+  },
+  methods: {
+    toggle (data) {
+      this.selectItem = data
+      data.show = !data.show
     }
   }
 }
@@ -45,11 +55,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
     .container {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       background-color: #CDCDCB;
+      font-family: 'Roboto', sans-serif;
     }
 
     .has-tap:active {
@@ -57,6 +69,7 @@ export default {
     }
 
     .menu {
+      display: flex;
       background-color: #FF6856;
       padding: 2em;
       margin-bottom: 2em;
@@ -67,12 +80,17 @@ export default {
       cursor: pointer;
     }
 
+    .menu .title {
+      flex: 1;
+      color: white;
+      text-align: center;
+      font-size: 20px;
+    }
+
     .items {
         display: flex;
         flex-direction: column;
         flex: 1;
-        font-family: 'Roboto', sans-serif;
-
     }
 
     .item {
